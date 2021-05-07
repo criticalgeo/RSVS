@@ -8,10 +8,10 @@ library(googlesheets4)
 ss <- "https://docs.google.com/spreadsheets/d/1vg1N83tw0_s9dcCf7amnF-1NGahtIv1sO9o-grRWXiA/edit#gid=0"
 
 # defining function that opens article links from given sheet tab
-browse <- function(tab_name, increment = 20) {
+browse <- function(tab_name, start = 1, increment = 20) {
   df <- read_sheet(ss, sheet = tab_name) # reading in sheet
   
-  start <- 1 # setting initial start index
+  start <- start # setting initial start index
   end <- increment # setting initial end index
   
   # loop that incrementally opens article links and stops when the start index is greater than number of rows (i.e. rows have run out)
@@ -44,8 +44,10 @@ browse <- function(tab_name, increment = 20) {
   }
 }
 
-# run function! default increment (i.e. number of tabs to open) is set to 20 but you can change it by adding the incrementer parameter (e.g. browse("bbc_topstories", increment = 30))
+# run function! 
+# default increment (i.e. number of tabs to open) is set to 20 but you can change it by adding the increment parameter (e.g. browse("bbc_topstories", increment = 30))
+# default start index is 1, but change if needed (i.e. if you left off mid-sheet) (e.g. browse("bbc_topstories", start = 30))
 
-browse("propublica", 5)
+browse("nyt_upshot")
   
 
