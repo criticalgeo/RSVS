@@ -46,6 +46,6 @@ browse <- function(tab_name, increment = 20) {
 
 # run function! default increment (i.e. number of tabs to open) is set to 20 but you can change it by adding the incrementer parameter (e.g. browse("bbc_topstories", increment = 30))
 
-browse("INSERT TAB NAME HERE")
+browse("propublica", 5)
   
 

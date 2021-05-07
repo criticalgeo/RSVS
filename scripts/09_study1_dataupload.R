@@ -6,7 +6,7 @@
 library(dplyr) # for tidying data
 library(googlesheets4) # for interfacing with Google Sheets
 
-ss <- "https://docs.google.com/spreadsheets/d/1vg1N83tw0_s9dcCf7amnF-1NGahtIv1sO9o-grRWXiA/edit#gid=0" # link to Google Sheet
+ss <- "https://docs.google.com/spreadsheets/d/1YJeAVCf5-ekKeTOYMcZdvFZ7Z9LKUbceSfzXqnkDsV0/edit#gid=0" # link to Google Sheet
 file_path <- "data/raw/study1/raw_feeds/" # file path containing raw feds
 
 start_date <- "2021-05-03" # data collection start date ——— CHANGE THIS FOR REAL DATA COLLECTION DATE
@@ -21,16 +21,15 @@ initial_write <- function(start_date) {
     
     temp_df <- read.csv(paste0(file_path, start_date, "/", file)) %>% # read in CSV into R environment
       mutate(collection_date = start_date) %>% # add data collection date column
-      select(-c("item_description", "X")) # delete item_description column (sometimes too many characters for Google Sheets) and "X", which is just row indices — also unnecessary
-    
-    temp_df <- temp_df[c(ncol(temp_df), 1:(ncol(temp_df)-1))] # reordering columns to place year column first
+      select(any_of(c("collection_date", "feed_title", "feed_pub_date", "feed_last_build_date", "item_title", "item_link", "item_pub_date"))) # select relevant columns
+
     tab_name <- substr(file, 1, nchar(file) - 4) # cutting ".csv" from file name to serve as tab name
     write_sheet(temp_df, ss, tab_name) # writing sheet to Google Sheets file
   })
 }
 
 # RUN THIS NEXT LINE OF CODE ONLY ONE TIME WHEN FIRST TRANSFERRING DATA TO GOOGLE SHEETS— if run again, tables on Google Sheets will be overwritten (I commented it out for safety)
-# initial_write(start_date) 
+initial_write(start_date) 
 
 #######################################################
 # This next chunk of code (lines 41-56):
@@ -47,14 +46,10 @@ lapply(todo_dates, function(date) {
   lapply(file_list, function(file) {
     temp_df <- read.csv(paste0(file_path, date, "/", file)) %>%
       mutate(collection_date = date) %>%
-      select(-c("item_description", "X"))
-    
-    temp_df <- temp_df[c(ncol(temp_df), 1:(ncol(temp_df)-1))] # reordering columns to place year column first
+      select(any_of(c("collection_date", "feed_title", "feed_pub_date", "feed_last_build_date", "item_title", "item_link", "item_pub_date")))
+
     tab_name <- substr(file, 1, nchar(file) - 4) # cutting ".csv" from file name to serve as tab name
     sheet_append(ss, temp_df, tab_name)
   })
 })
-
-
-
 

@@ -22,9 +22,36 @@ rss_feeds <- read_sheet(ss) # reading in sheet
 
 
 for (row in 1:nrow(rss_feeds)) {
-  temp_feed <- tidyfeed(rss_feeds$rss[row]) %>% # read RSS feed into data frame
-    select(-c("item_category")) # remove last column of item_category (it's in list format and irrelevant to data collection)
-  write.csv(temp_feed, paste0(target_folder, "/", rss_feeds$name[row], ".csv"))
+  tryCatch(
+    # attempt to retrieve RSS feed
+    {tidyfeed(rss_feeds$rss[row]) %>%
+        select(-c("item_category")) %>%
+        write.csv(paste0(target_folder, "/", rss_feeds$name[row], ".csv"))
+      },
+    # if error, push error message
+    error = function(cond) {
+      message(paste0("ERROR (", rss_feeds$name[row], "):\n"))
+      message(cond)
+      message("\nExamine RSS feed link. Once feed is succesfully retrieved in your browser, use code at the bottom of this script to collect this feed separately. \n")
+    },
+    # if warning, push warning message
+    warning = function(cond) {
+      message(paste0("WARNING (", rss_feeds$name[row], "):\n"))
+      message(cond)
+      message("\nExamine RSS feed link. Once feed is succesfully retrieved in your browser, use code at the bottom of this script to collect this feed separately. \n")
+    }
+  )
 }
+
+# IF THE ABOVE LOOP MISSED A FEED, UNCOMMENT (Cmd + Shift + C) LINES 48 - 53, INSERT MISSING FEED NAME IN LINE 48, THEN RUN LINES 48-53 UNTIL FEED IS SUCCESSFULLY SAVED
+# input missing feed in line 48, e.g. "wapo_world"
+# missing_feed <- "INSERT MISSING FEED HERE"
+# 
+# temp_df <- tidyfeed(rss_feeds$rss[rss_feeds$name == missing_feed]) %>%
+#     select(-c("item_category"))
+#   
+# write.csv(temp_df, paste0(target_folder, "/", missing_feed, ".csv"))
+
+
 
 
