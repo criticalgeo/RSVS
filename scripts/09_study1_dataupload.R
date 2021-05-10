@@ -6,7 +6,7 @@
 library(dplyr) # for tidying data
 library(googlesheets4) # for interfacing with Google Sheets
 
-ss <- "https://docs.google.com/spreadsheets/d/1YJeAVCf5-ekKeTOYMcZdvFZ7Z9LKUbceSfzXqnkDsV0/edit#gid=0" # link to Google Sheet
+ss <- "https://docs.google.com/spreadsheets/d/1vg1N83tw0_s9dcCf7amnF-1NGahtIv1sO9o-grRWXiA/edit#gid=1312139004" # link to Google Sheet
 file_path <- "data/raw/study1/raw_feeds/" # file path containing raw feds
 
 start_date <- "2021-05-03" # data collection start date ——— CHANGE THIS FOR REAL DATA COLLECTION DATE
