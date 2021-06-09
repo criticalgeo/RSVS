@@ -32,25 +32,25 @@ for (row in 1:nrow(rss_feeds)) {
     error = function(cond) {
       message(paste0("ERROR (", rss_feeds$name[row], "):\n"))
       message(cond)
-      message("\nExamine RSS feed link. Once feed is succesfully retrieved in your browser, use code at the bottom of this script to collect this feed separately. \n")
+      message("\nRun lines 48-53! \n")
     },
     # if warning, push warning message
     warning = function(cond) {
       message(paste0("WARNING (", rss_feeds$name[row], "):\n"))
       message(cond)
-      message("\nExamine RSS feed link. Once feed is succesfully retrieved in your browser, use code at the bottom of this script to collect this feed separately. \n")
+      message("\nRun lines 48-53! \n")
     }
   )
 }
 
 # IF THE ABOVE LOOP MISSED A FEED, UNCOMMENT (Cmd + Shift + C) LINES 48 - 53, INSERT MISSING FEED NAME IN LINE 48, THEN RUN LINES 48-53 UNTIL FEED IS SUCCESSFULLY SAVED
 # input missing feed in line 48, e.g. "wapo_world"
-# missing_feed <- "INSERT MISSING FEED HERE"
-# 
-# temp_df <- tidyfeed(rss_feeds$rss[rss_feeds$name == missing_feed]) %>%
-#     select(-c("item_category"))
-#   
-# write.csv(temp_df, paste0(target_folder, "/", missing_feed, ".csv"))
+missing_feed <- "wapo_world"
+
+temp_df <- tidyfeed(rss_feeds$rss[rss_feeds$name == missing_feed]) %>%
+    select(-c("item_category"))
+
+write.csv(temp_df, paste0(target_folder, "/", missing_feed, ".csv"))
 
 
 

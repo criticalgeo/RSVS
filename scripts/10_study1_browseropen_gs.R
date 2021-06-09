@@ -12,7 +12,7 @@ browse <- function(tab_name, start = 1, increment = 20) {
   df <- read_sheet(ss, sheet = tab_name) # reading in sheet
   
   start <- start # setting initial start index
-  end <- increment # setting initial end index
+  end <- start + increment - 1 # setting initial end index
   
   # loop that incrementally opens article links and stops when the start index is greater than number of rows (i.e. rows have run out)
   while (start < nrow(df)) { 
@@ -35,7 +35,7 @@ browse <- function(tab_name, start = 1, increment = 20) {
     if (start < nrow(df)) {
       if (end < nrow(df)) {
         readline(prompt = paste0("Press [enter] to open articles ", start, "-", end, "."))
-      } else if (end == nrow(df)){
+      } else if (end == nrow(df)){ 
         readline(prompt = paste0("Press [enter] to open articles ", start, "-", nrow(df), ". —— LAST ROUND"))
       }
     } else {
@@ -48,6 +48,9 @@ browse <- function(tab_name, start = 1, increment = 20) {
 # default increment (i.e. number of tabs to open) is set to 20 but you can change it by adding the increment parameter (e.g. browse("bbc_topstories", increment = 30))
 # default start index is 1, but change if needed (i.e. if you left off mid-sheet) (e.g. browse("bbc_topstories", start = 30))
 
-browse("nyt_upshot")
+browse("bbc_uk")
+
+
+
   
 

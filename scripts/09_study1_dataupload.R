@@ -13,7 +13,7 @@ start_date <- "2021-05-03" # data collection start date ——— CHANGE THIS FO
 # start date is in format "YYYY-MM-DD" (unless your system prints dates differently — check your folder names to confirm)
 
 # Defining a function to write the first day of data into Google Sheet — this is done to create a "base" table with all the correct columns on which to append future days of data. Function only needs to be run once.
-initial_write <- function(start_date) {
+initial_write <- function(start_xdate) {
   file_list <- list.files(paste0(file_path, start_date), pattern = "*.csv") # create character vector of file names in local directory
   
   # loop that goes over files in local directory and writes a new google sheet for each table
@@ -29,7 +29,7 @@ initial_write <- function(start_date) {
 }
 
 # RUN THIS NEXT LINE OF CODE ONLY ONE TIME WHEN FIRST TRANSFERRING DATA TO GOOGLE SHEETS— if run again, tables on Google Sheets will be overwritten (I commented it out for safety)
-initial_write(start_date) 
+# initial_write(start_date) 
 
 #######################################################
 # This next chunk of code (lines 41-56):
@@ -52,4 +52,6 @@ lapply(todo_dates, function(date) {
     sheet_append(ss, temp_df, tab_name)
   })
 })
+
+# random comment line for testing 
 
