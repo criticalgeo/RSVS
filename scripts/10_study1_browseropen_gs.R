@@ -5,7 +5,7 @@ library(dplyr)
 library(googlesheets4)
 
 # input Google Sheet
-ss <- "https://docs.google.com/spreadsheets/d/1vg1N83tw0_s9dcCf7amnF-1NGahtIv1sO9o-grRWXiA/edit#gid=0"
+ss <- "https://docs.google.com/spreadsheets/d/1zzRDai1VRg6lh31vfKwBT0qk8CY_w0kDVxQ4qGoNXBU/edit#gid=0"
 
 # defining function that opens article links from given sheet tab
 browse <- function(tab_name, start = 1, increment = 20) {
@@ -48,7 +48,7 @@ browse <- function(tab_name, start = 1, increment = 20) {
 # default increment (i.e. number of tabs to open) is set to 20 but you can change it by adding the increment parameter (e.g. browse("bbc_topstories", increment = 30))
 # default start index is 1, but change if needed (i.e. if you left off mid-sheet) (e.g. browse("bbc_topstories", start = 30))
 
-browse("bbc_uk")
+browse("wapo_us", start = 95)
 
 
 

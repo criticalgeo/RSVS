@@ -13,7 +13,7 @@ start_date <- "2021-05-03" # data collection start date ——— CHANGE THIS FO
 # start date is in format "YYYY-MM-DD" (unless your system prints dates differently — check your folder names to confirm)
 
 # Defining a function to write the first day of data into Google Sheet — this is done to create a "base" table with all the correct columns on which to append future days of data. Function only needs to be run once.
-initial_write <- function(start_xdate) {
+initial_write <- function(start_date) {
   file_list <- list.files(paste0(file_path, start_date), pattern = "*.csv") # create character vector of file names in local directory
   
   # loop that goes over files in local directory and writes a new google sheet for each table
