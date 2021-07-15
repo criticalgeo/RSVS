@@ -1,0 +1,25 @@
+data
++--raw
+|  +--study1
+|     +--raw_feeds
+|		 +--...zip files containing feeds for each data collection date (2021-xx-xx.zip)
+|		 +--complete_raw_feeds.zip (zip file containing compiled CSVs for entire data collection date –— one CSV for each feed)
+|  +--study2
+|     +--interview_notes (exported word documents of raw feeds)
+|     +--rsvs2_interviews.scriv (Scrivener file for interview notes)
++--processed
+|  +--study1
+|     +--sum_stats_march3to9.csv (summary containing number of maps from first week of data collection)
+|     +--study1_feeds_nodups_0714 (contains CSVs for each feed from full collection date, with duplicates removed on 07/14/2021)
+|        +--nyt_homepage_nodups_0714.csv
+|        +--nyt_upshot_nodups_0714.csv
+|        +--wapo_us_nodups_0714.csv
+|        +--....etc.
+|        +--complete_raw_feeds_nodups.zip (zipped folder of all of these feeds)
+|  +--study2
+|     +--study2_sample_0401 (contains CSVs with Twitter data from OJA winning outlets)
+|     +--study2_sample_malofiej_0409 (...from Malofiej awards)
+|     +--etc.
+
+
+
