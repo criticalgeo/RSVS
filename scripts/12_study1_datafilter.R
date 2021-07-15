@@ -23,28 +23,25 @@ summary_df <- data.frame(feed = character(), no_articles = numeric(), yes_maps =
 compiled_df <- data.frame(feed_name = character(), collection_date = character(), feed_pub_date = character(), item_title = character(), item_link = character(), item_pub_date = character(), maps = character(), notes = character())
 
 lapply(feed_list, function(feed) {
-  df <- read_sheet(ss, feed, col_types = "c") 
-  names(df)[names(df) == "map?"] <- "maps"
-  df$collection_date <- ymd(df$collection_date)
-  df <- df %>%
-    filter(!is.na(maps)) %>%
-    filter(collection_date <= as.Date("2021-05-09"))
-  df$maps <- gsub("yes", "y", df$maps)
-  df$maps <- gsub("no", "n", df$maps)
+  df <- read_sheet(ss, feed, col_types = "c") # read in raw feed from Google Sheets
+  names(df)[names(df) == "map?"] <- "maps" # change column name ("?" sometimes acts up)
+  df$collection_date <- ymd(df$collection_date) # make sure collection_date is in date format
+  df$maps <- gsub("yes", "y", df$maps) # replace "yes" with "y" for consistency
+  df$maps <- gsub("no", "n", df$maps) # etc.
   df$maps <- gsub ("maybe", "m", df$maps)
   
   df_maps <- df %>%
-    filter(maps == "y" | maps == "m")
+    filter(maps == "y" | maps == "m") # filter out articles with "y" or "maybe" maps
   
-  write_sheet(df_maps, ss = new_ss, sheet = feed)
-  write.csv(df_maps, paste0("data/processed/study1/study1_filtered_feeds/", feed, "_filtered.csv"))
+  write_sheet(df_maps, ss = new_ss, sheet = feed) # write to Google Sheet
+  write.csv(df_maps, paste0("data/processed/study1/study1_filtered_feeds/", feed, "_filtered.csv")) # write to local CSV
   
   # add column for feed name in preparation for binding to other feeds & selecting columns to make sure all feeds have the same number of columns for row binding
   df_maps <- df_maps %>%
     mutate(feed_name = feed) %>%
-    select(feed_name, collection_date, feed_pub_date, item_title, item_link, item_pub_date, maps, notes)
+    select(feed_name, collection_date = ymd(collection_date), feed_pub_date, item_title, item_link, item_pub_date, maps, notes)
   
-  compiled_df <<- rbind(compiled_df, df_maps)
+  compiled_df <<- rbind(compiled_df, df_maps) # bind to big data frame
   
   # create summary tables to see how many maps
   no_articles <- nrow(df)
